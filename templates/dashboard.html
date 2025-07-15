@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome to your Dashboard, {{ user.username }}!</h2>
+    <p>From here you can manage your policies and claims.</p>
+    <h3>Quick Links:</h3>
+    <ul>
+        <li><a href="{{ url_for('add_policy') }}">Add New Policy</a></li>
+        <li><a href="{{ url_for('policies') }}">View My Policies</a></li>
+        <li><a href="{{ url_for('file_claim') }}">File a New Claim</a></li>
+        <li><a href="{{ url_for('claims') }}">View My Claims</a></li>
+    </ul>
+{% endblock %}

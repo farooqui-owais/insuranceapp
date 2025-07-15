@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}File New Claim{% endblock %}
+
+{% block content %}
+    <h2>File a New Claim</h2>
+    <form method="POST" action="{{ url_for('file_claim') }}">
+        <div>
+            <label for="policy_id">Select Policy:</label>
+            <select id="policy_id" name="policy_id" required>
+                {% for policy in policies %}
+                    <option value="{{ policy.id }}">Policy #{{ policy.policy_number }} ({{ policy.policy_type }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="description">Claim Description:</label>
+            <textarea id="description" name="description" rows="5" required></textarea>
+        </div>
+        <div>
+            <label for="claim_date">Date of Incident/Claim:</label>
+            <input type="date" id="claim_date" name="claim_date" required>
+        </div>
+        <button type="submit">Submit Claim</button>
+    </form>
+{% endblock %}

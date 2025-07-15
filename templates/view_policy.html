@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Policy #{{ policy.policy_number }}{% endblock %}
+
+{% block content %}
+    <h2>Policy Details: #{{ policy.policy_number }}</h2>
+    <div class="policy-card">
+        <p><strong>Policy Type:</strong> {{ policy.policy_type }}</p>
+        <p><strong>Coverage Amount:</strong> ${{ "%.2f"|format(policy.coverage_amount) }}</p>
+        <p><strong>Premium Amount:</strong> ${{ "%.2f"|format(policy.premium_amount) }}</p>
+        <p><strong>Start Date:</strong> {{ policy.start_date }}</p>
+        <p><strong>End Date:</strong> {{ policy.end_date }}</p>
+        <p><strong>Status:</strong> {{ policy.status }}</p>
+    </div>
+    <p>
+        <a href="{{ url_for('edit_policy', policy_id=policy.id) }}" class="button">Edit Policy</a>
+        <form action="{{ url_for('delete_policy', policy_id=policy.id) }}" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this policy and all associated claims?');">Delete Policy</button>
+        </form>
+        <a href="{{ url_for('policies') }}">Back to My Policies</a>
+    </p>
+
+    <h3>Associated Claims:</h3>
+    {% if policy.claims %}
+        {% for claim in policy.claims %}
+            <div class="claim-card">
+                <h4>Claim #{{ claim.claim_number }}</h4>
+                <p><strong>Description:</strong> {{ claim.description }}</p>
+                <p><strong>Claim Date:</strong> {{ claim.claim_date }}</p>
+                <p><strong>Status:</strong> {{ claim.status }}</p>
+                <p><a href="{{ url_for('view_claim', claim_id=claim.id) }}">View Claim Details</a></p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No claims associated with this policy.</p>
+    {% endif %}
+
+    <style>
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .button:hover { background-color: #0056b3; }
+    </style>
+{% endblock %}

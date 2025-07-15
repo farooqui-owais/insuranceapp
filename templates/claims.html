@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}My Claims{% endblock %}
+
+{% block content %}
+    <h2>My Claims</h2>
+    <p><a href="{{ url_for('file_claim') }}">File a New Claim</a></p>
+    {% if claims %}
+        {% for claim in claims %}
+            <div class="claim-card">
+                <h3>Claim #{{ claim.claim_number }}</h3>
+                <p><strong>Policy:</strong> {{ claim.policy.policy_number }} ({{ claim.policy.policy_type }})</p>
+                <p><strong>Description:</strong> {{ claim.description }}</p>
+                <p><strong>Claim Date:</strong> {{ claim.claim_date }}</p>
+                <p><strong>Status:</strong> {{ claim.status }}</p>
+                <p>
+                    <a href="{{ url_for('view_claim', claim_id=claim.id) }}">View Details</a> |
+                    <a href="{{ url_for('edit_claim', claim_id=claim.id) }}">Edit</a>
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You haven't filed any claims yet. <a href="{{ url_for('file_claim') }}">File one now!</a></p>
+    {% endif %}
+{% endblock %}

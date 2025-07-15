@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Claim #{{ claim.claim_number }}{% endblock %}
+
+{% block content %}
+    <h2>Edit Claim: #{{ claim.claim_number }}</h2>
+    <form method="POST" action="{{ url_for('edit_claim', claim_id=claim.id) }}">
+        <div>
+            <label for="policy_number">Associated Policy:</label>
+            <input type="text" value="{{ claim.policy.policy_number }} ({{ claim.policy.policy_type }})" readonly>
+        </div>
+        <div>
+            <label for="description">Claim Description:</label>
+            <textarea id="description" name="description" rows="5" required>{{ claim.description }}</textarea>
+        </div>
+        <div>
+            <label for="claim_date">Date of Incident/Claim:</label>
+            <input type="date" id="claim_date" name="claim_date" value="{{ claim.claim_date }}" required>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" value="{{ claim.status }}" readonly>
+            <small>(Claim status is typically updated by the insurance provider)</small>
+        </div>
+        <button type="submit">Update Claim</button>
+        <a href="{{ url_for('view_claim', claim_id=claim.id) }}" class="button">Cancel</a>
+    </form>
+    <style>
+        .button {
+            background-color: #6c757d; /* Grey for cancel */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .button:hover { background-color: #5a6268; }
+    </style>
+{% endblock %}
